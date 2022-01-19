@@ -1,16 +1,16 @@
 import os
-
 import pytest
 from selenium import webdriver
-from selenium.webdriver.common.by import By
+from pages.login_page import LoginPage
 
 
 @pytest.fixture
-def driver(request):
+def login(request):
     # è uma variavel local para armazenar o caminho do chromedriver
     # '_' antes da variavel significa que ela so existe aqui
-    # _chromedriver = 'vendor/chromedriver.exe'
-    _chromedriver = os.path.join(os.getcwd(), 'vendor', 'chromedriver.exe')
+    print('>>> CWD == ' + os.getcwd())
+    _chromedriver = 'C:/Users/vinic/PycharmProjects/Heroku_Login/vendor/chromedriver.exe'
+    # _chromedriver = os.path.join(os.getcwd(), '../vendor', 'chromedriver.exe')
 
     if os.path.isfile(_chromedriver):
         # '_' depois da variavel driver , significa que qur não quero que ela
@@ -20,16 +20,17 @@ def driver(request):
     else:
         # Else - se não existe, tente usar um chromedriver publico no ambiente
         driver_ = webdriver.Chrome()
+    loginPage = LoginPage(driver_)  # instanciando a classe LoginPage e passando o Selenium
 
     def quit():
         driver_.quit()
 
     # sinalizando o fim da execução do ambiente
     request.addfinalizer(quit)
-    return driver_
+    return loginPage
 
 
-# Comoera os passos do jeio simples
+# Como era os passos do jeio simples
 '''    
     def old_test_login_valido(driver):
     driver.get('https://the-internet.herokuapp.com/login')
@@ -47,14 +48,14 @@ def testar_login_com_sucesso(login):
     assert login.vejo_mensagem_de_sucesso()
 
 
-def testar_login_com_usuario_invalido(self, login):
+def testar_login_com_usuario_invalido(login):
     # Preencher o usuario, senha e clicar no botao
     login.com_('asdedasdead', 'SuperSecretPassword!')
     # validar message
     assert login.vejo_mensagem_de_falha()
 
 
-def testar_login_com_senha_invalida(self, login):
+def testar_login_com_senha_invalida(login):
     # Preencher o usuario, senha e clicar no botao
     login.com_('tomsmith', 'xpto3456')
     # validar message
