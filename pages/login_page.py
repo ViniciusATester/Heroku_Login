@@ -18,7 +18,7 @@ class LoginPage(BasePage):
     # 2.2 Inicializador/Construtor(Java)
     def __init__(self, driver):
         self.driver = driver  # instanciando o selenium
-        self._entrar('https://the-internet.herokuapp.com/login')  # abrindo a pagina alvo
+        self._entrar('/login')  # abrindo a pagina alvo
         assert self._aparecer(self._login_form)  # validando se o formulpario de login esta visivel
 
     def com_(self, username, password):

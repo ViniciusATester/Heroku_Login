@@ -1,5 +1,5 @@
-baseurl = ''
-host = ''
-browser = ''
+baseurl = 'https://the-internet.herokuapp.com'
+host = 'local'
+browser = 'firefox'
 browserversion = ''
 platform = ''

@@ -1,33 +1,14 @@
-import os
+#import os
 import pytest
-from selenium import webdriver
-from pages.login_page import LoginPage
+#from selenium import webdriver
+from pages import login_page
+
 
 
 @pytest.fixture
-def login(request):
-    # è uma variavel local para armazenar o caminho do chromedriver
-    # '_' antes da variavel significa que ela so existe aqui
-    print('>>> CWD == ' + os.getcwd())
-    _chromedriver = 'C:/Users/vinic/PycharmProjects/Heroku_Login/vendor/chromedriver.exe'
-    # _chromedriver = os.path.join(os.getcwd(), '../vendor', 'chromedriver.exe')
+def login(driver): # deixou de receber requests e passou receber diretamente o driver
+    return login_page.LoginPage(driver)  # instanciando a classe LoginPage e passando o Selenium
 
-    if os.path.isfile(_chromedriver):
-        # '_' depois da variavel driver , significa que qur não quero que ela
-        # se confunda com outro driver que possa aparecer
-        # If- Se existe um chromedrivr dentro do projeto, instancie com ele
-        driver_ = webdriver.Chrome(_chromedriver)
-    else:
-        # Else - se não existe, tente usar um chromedriver publico no ambiente
-        driver_ = webdriver.Chrome()
-    loginPage = LoginPage(driver_)  # instanciando a classe LoginPage e passando o Selenium
-
-    def quit():
-        driver_.quit()
-
-    # sinalizando o fim da execução do ambiente
-    request.addfinalizer(quit)
-    return loginPage
 
 
 # Como era os passos do jeio simples
